@@ -15,16 +15,27 @@ public class HomeController {
 
     private final VideoService videoService;
 
-    public HomeController(VideoService videoService) {
+    private final YouTube youTube;
+
+    public HomeController(VideoService videoService, YouTube youTube) {
         this.videoService = videoService;
+        this.youTube = youTube;
     }
 
-    @GetMapping("/")
-    public String index(Model model, Authentication authentication) {
-        model.addAttribute("videos", videoService.getVideos());
-        model.addAttribute("authentication", authentication);
+    @GetMapping
+    String index(Model model) {
+        model.addAttribute("channelVideos", //
+                youTube.channelVideos("UCjukbYOd6pjrMpNMFAOKYyw",
+                        10, YouTube.Sort.VIEW_COUNT));
         return "index";
     }
+
+//    @GetMapping("/")
+//    public String index(Model model, Authentication authentication) {
+//        model.addAttribute("videos", videoService.getVideos());
+//        model.addAttribute("authentication", authentication);
+//        return "index";
+//    }
 
     @PostMapping("/new-video")
     public String newVideo(@ModelAttribute NewVideo newVideo, Authentication authentication) {

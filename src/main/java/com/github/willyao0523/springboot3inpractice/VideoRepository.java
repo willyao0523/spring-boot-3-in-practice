@@ -2,19 +2,19 @@ package com.github.willyao0523.springboot3inpractice;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
 public interface VideoRepository extends JpaRepository<VideoEntity, Long> {
 
-    List<VideoEntity> findByName(String name);
+    List<VideoEntity> findByNameContainsIgnoreCase(String partialName);
 
-    @Query("select v from VideoEntity v where v.name = ?1")
-    List<VideoEntity> findCustomerReport(String name);
+    List<VideoEntity> findByDescriptionContainsIgnoreCase(String partialDescription);
 
-    List<VideoEntity> findByDescriptionContainsIgnoreCase(String description);
+    List<VideoEntity> findByNameContainsOrDescriptionContainsAllIgnoreCase(String partialName, String partialDescription);
 
-    List<VideoEntity> findByNameContainsIgnoreCase(String name);
-
-    List<VideoEntity> findByNameContainsOrDescriptionContainsAllIgnoreCase(String name, String description);
+    @PreAuthorize("#entity.username == authentication.name")
+    @Override
+    void delete(VideoEntity entity);
 }

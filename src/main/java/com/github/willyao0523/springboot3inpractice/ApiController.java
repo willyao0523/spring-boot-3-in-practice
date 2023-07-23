@@ -1,5 +1,6 @@
 package com.github.willyao0523.springboot3inpractice;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +22,7 @@ public class ApiController {
     }
 
     @PostMapping("/api/videos")
-    public VideoEntity newVideo(@RequestBody NewVideo newVideo) {
-        return videoService.create(newVideo);
+    public VideoEntity newVideo(@RequestBody NewVideo newVideo, Authentication authentication) {
+        return videoService.create(newVideo, authentication.getName());
     }
 }

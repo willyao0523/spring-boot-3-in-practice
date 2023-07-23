@@ -5,18 +5,22 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
-public class VideoEntity {
+class VideoEntity {
+
     private @Id @GeneratedValue Long id;
+    private String username;
     private String name;
     private String description;
+
     protected VideoEntity() {
-        this(null, null);
+        this(null, null, null);
     }
 
-    VideoEntity(String name, String description) {
+    VideoEntity(String username, String name, String description) {
         this.id = null;
-        this.name = name;
+        this.username = username;
         this.description = description;
+        this.name = name;
     }
 
     public Long getId() {
@@ -25,6 +29,14 @@ public class VideoEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String user) {
+        this.username = user;
     }
 
     public String getName() {
